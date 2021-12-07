@@ -1,11 +1,15 @@
-const express = require('express');
 const path = require('path');
-
+const express = require('express');
 const app = express();
 
-app.use(express.static(__dirname+'/dist/ng-blog'));
-app.get('/',function(req,res){
-    res.sendFile(path.join(__dirname+'/dist/ng-blog/index.html'));
+// Serve static files
+app.use(express.static(__dirname + '/dist/MY_APP_NAME'));
+
+// Send all requests to index.html
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname + '/dist/MY_APP_NAME/index.html'));
 });
 
-app.listen(process.env.PORT || 8080);
+// default Heroku port
+app.listen(process.env.PORT || 5000);
+
