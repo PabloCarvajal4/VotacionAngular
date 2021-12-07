@@ -1,0 +1,106 @@
+<button nz-button nzType="primary" (click)="open()">Ingresar un Nuevo Registro</button>
+
+<nz-table #basicTable [nzData]="listOfHardware">
+  <thead>
+    <tr>
+      <th>Candidato</th>
+      <th>Votos</th>
+      <th>Designado Principal</th>
+      <th>Partido</th>
+      <th>Color</th>
+      <th>Accion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.candidato }}</td>
+      <td>{{ data.votos }}</td>
+      <td>{{ data.designadoPrincipal }}</td>
+      <td>{{ data.partido }}</td>
+      <td>{{ data.color }}</td>
+      <td>
+        <a (click)="modificar(data)">Editar</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a nz-popconfirm nzPopconfirmTitle="Estas seguro de borrar el registro?" [nzIcon]="iconTpl" (nzOnConfirm)="delete(data.id)" (nzOnCancel)="cancel()" nzCancelText="No" nzOkText="Si">
+          Borrar
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+
+
+<!--TEMPLATE-->
+<ng-template #iconTpl>
+  <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+</ng-template>
+
+
+
+<!--Drawer-->
+<nz-drawer
+      [nzBodyStyle]="{ overflow: 'auto' }"
+      [nzMaskClosable]="false"
+      [nzWidth]="720"
+      [nzVisible]="visible"
+      nzTitle="Formulario Hardware"
+      [nzFooter]="footerTpl"
+      (nzOnClose)="close()"
+    > 
+      <form nz-form *nzDrawerContent (submit)="submitForm()" [formGroup]="form">
+        <div nz-row [nzGutter]="8">
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label>Candidato</nz-form-label>
+              <nz-form-control>
+                <input formControlName="candidato" nz-input placeholder="" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label>Votos</nz-form-label>
+              <nz-form-control>
+                <nz-input-number formControlName="votos" [nzMin]="1"  [nzStep]="1" placeholder=""></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="8">
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label>Designado Principal</nz-form-label>
+              <nz-form-control>
+                <input formControlName="designadoPrincipal" nz-input placeholder="" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label>Partido</nz-form-label>
+              <nz-form-control>
+                 <input formControlName="partido" nz-input placeholder="" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="8">
+          <div nz-col nzSpan="12">
+            <nz-form-item>
+              <nz-form-label>Color</nz-form-label>
+              <nz-form-control>
+                <input formControlName="color" nz-input  placeholder="" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </form>
+
+      <ng-template #footerTpl>
+        <div style="float: right">
+          <button nz-button style="margin-right: 8px;" (click)="close()">Cancelar</button>
+          <button nz-button nzType="primary" (click)="guardar()">Guardar</button>
+        </div>
+      </ng-template>
+    </nz-drawer>
