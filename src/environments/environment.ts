@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlBackend:'https://votacionhn.herokuapp.com/'
+  urlBackend:'http://votacionhn.herokuapp.com/'
 };
 
 /*
